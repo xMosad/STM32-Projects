@@ -21,7 +21,6 @@
 /* MCAL layer */
 #include "RCC_interface.h"
 #include "GPIO_interface.h"
-#include "GPIO_private.h"
 
 /* HAL layer */
 #include "LED_interface.h"
