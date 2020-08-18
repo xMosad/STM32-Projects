@@ -96,10 +96,6 @@ void sebha_system_init (void){
 	up    = BUTTON_voidInit(PORTB , UP_BUTTON   );
 	down  = BUTTON_voidInit(PORTB , DOWN_BUTTON );
 
-	/* Enable Pull up  */
-	GPIOB_BSRR |= (1 << UP_BUTTON   ) ;
-	GPIOB_BSRR |= (1 << DOWN_BUTTON ) ;
-	GPIOB_BSRR |= (1 << POWER_BUTTON) ;
 }
 
 /*

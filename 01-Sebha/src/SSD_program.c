@@ -38,6 +38,8 @@ const u8 SSD_values[10]		= {0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F
 
 
 void SSD_voidInit(SSD_selectID_t copy_id){
+	// Enable the port clock
+	RCC_voidEnableClock(RCC_APB2 , (copy_id.SSD_portId + IOPA_PERIPHERAL) );
 	// Making the pins output
 	for (u8 i = copy_id.SSD_startPin ; i <= (copy_id.SSD_startPin+7) ; i++ ){
 		GPIO_voidSetPinMode(copy_id.SSD_portId , i , SSD_OUTPUT_MODE );
@@ -46,8 +48,8 @@ void SSD_voidInit(SSD_selectID_t copy_id){
 	#if SSD_MULTIPLEXING_NUMBER > 1 
 		// Enable the port clock
 		RCC_voidEnableClock(RCC_APB2 , (SSD_SELECT_PORT + IOPA_PERIPHERAL) );
-		// configure the select pins as output and setting the to the initialize state
-		for (u8 i = 0 ; i < 4 ; i++){
+		// configure the select pins as output and setting them to the initialize state
+		for (u8 i = 0 ; i < SSD_MULTIPLEXING_NUMBER ; i++){
 			GPIO_voidSetPinMode (SSD_SELECT_PORT , SSD_selectPins[i] , SSD_OUTPUT_MODE       );
 			GPIO_voidsetPinValue(SSD_SELECT_PORT , SSD_selectPins[i] , SSD_SELCET_INIT_STATE );
 		}

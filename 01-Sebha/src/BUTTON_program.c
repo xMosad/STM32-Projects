@@ -43,13 +43,17 @@ GPIO_pinsNumbers_t  buttons_pins[BUTTON_NUMBER] ;
 
 u8 BUTTON_voidInit(GPIO_portId_t copyPortId , GPIO_pinsNumbers_t copyPinNumber){
 	static u8 i ;
-
+	/* Enable RCC for the port*/
+	RCC_voidEnableClock(RCC_APB2 , (copyPortId + IOPA_PERIPHERAL) );
+	 
 	 /* Intialize the pins as input */
 	#if   BUTTON_PULL_TYPE == INTERNAL_PULL_UP 
-		GPIO_voidSetPinMode(copyPortId , copyPinNumber , GPIO_INPUT_PULL_UP );
+		GPIO_voidSetPinMode (copyPortId , copyPinNumber , GPIO_INPUT_PULL_UP_DOWN );
+		GPIO_voidSetPullType(copyPortId , copyPinNumber , GPIO_PULL_UP);
 		
 	#elif BUTTON_PULL_TYPE == INTERNAL_PULL_DOWN
-		GPIO_voidSetPinMode(copyPortId , copyPinNumber , GPIO_INPUT_PULL_DOWN );
+		GPIO_voidSetPinMode(copyPortId , copyPinNumber , GPIO_INPUT_PULL_UP_DOWN );
+		GPIO_voidSetPullType(copyPortId , copyPinNumber , GPIO_PULL_DOWN);
 		
 	#elif (BUTTON_PULL_TYPE == EXTERNAL_PULL_UP) || (BUTTON_PULL_TYPE == EXTERNAL_PULL_DOWN)
 		GPIO_voidSetPinMode(copyPortId , copyPinNumber , GPIO_INPUT_FLOATING );
