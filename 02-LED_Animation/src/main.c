@@ -13,7 +13,7 @@
 /* MCAL includes */
 #include "RCC_interface.h"
 #include "GPIO_interface.h"
-#include "SysTick_interface.h"
+#include "STK_interface.h"
 
 /* Functions prototypes */
 void Led_animation (void);
@@ -47,23 +47,19 @@ void main(void){
 	GPIO_voidSetPortMode(PORTA , GPIO_OUTPUT_10MHZ_PP);
 
 	/* Enable SysTick */
-	SysTick_voidInit();
+	STK_voidInit();
+	STK_voidSetIntervalPeriodic(100 , TIME_MS ,Led_animation );
 	while(1){
 
 	}
 
 }
 
-/* Interrupt fire every 100 ms */
-void SysTick_Handler(void) {
-	Global_timer++;
-	Led_animation();
-}
 
 
 void Led_animation (void){
+	Global_timer++;
 	switch (Global_state){
-
 		case LED_LEFT :
 			/* will execute every 200 ms */
 			if (Global_timer == 2){
